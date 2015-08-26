@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Drip Drip</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src='../paperjs-v0.9.24/dist/paper-full.js'></script>
+	<script type="text/javascript" src='script.js'></script>
+	<script type='text/paperscript' canvas='myCanvas'>
+		var arc = new Path.Arc(new Point(320, 380), new Point(400, 500), new Point(480, 380));
+
+		var rainTip = new Path();
+		rainTip.add(new Point(320, 380));
+		rainTip.add(new Point(400, 250));
+		rainTip.add(new Point(480, 380))
+		rainTip.closed = true;
+
+		var raindrop = new Group ({
+		  children: [arc, rainTip],
+		  position: view.center,
+		  fillColor: {
+		    gradient: {
+		        stops: ['#93C0DB', '#67A1C2', '#436FD4']
+		    },
+		    origin: (view.center - [30, 45]),
+        destination: (view.center + [30, 50])
+		  }
+		});
+
+		var raindrops = new Symbol(raindrop);
+		raindrop.remove();
+		var numOfDrops = 55;
+
+		for(var i = 0; i < numOfDrops; i++) {
+		  var firstDrop = raindrops.place();
+		  firstDrop.position = Point.random() * view.size;
+
+		  firstDrop.rotate(Math.random() * 30);
+		  firstDrop.scale(0.25 + Math.random() * 0.45);
+		}
+
+		//make it rain
+		function onFrame(event) {
+		  for( var i = 0; i < numOfDrops; i++) {
+		    var drop = project.activeLayer.children[i];
+		    drop.position.y += drop.bounds.height / 35;
+		    if(drop.bounds.bottom > view.size.height) {
+		        drop.position.y = -drop.bounds.height;
+		    }
+		  }
+		}
+
+		// draw a face
+		// var face = new Path.Circle(new Point(250,150), 75);
+
+		// var body = new Path();
+		// body.add(new Point(100, 600));
+		// body.add(new Point(250, 235));
+		// body.add(new Point(400, 600));
+		// body.closed = true;
+
+		// var arm1 = new Path.Line(new Point(325, 400), new Point(400, 225));
+		// var arm2 = new Path.Line(new Point(175,400), new Point(100, 225));
+
+		// var leg1 = new Path.Line(new Point(240, 600), new Point(240,750));
+		// var leg2 = new Path.Line(new Point(260, 600), new Point(260,750));
+
+		// var person = new Group({
+		//     children:[face, body, arm1, arm2, leg1, leg2],
+		//     strokeColor: 'black',
+		//     strokeWidth: 8
+		// })
+
+		// person.fillColor = 'white';
+
+		</script>
+</head>
+<body>
+	<canvas id='myCanvas' resize></canvas>
+	<section id='header'>
+		<h1>Water water everywhere, but how much do I drink?</h1>
+	</section>
+
+	<section id='beforeCalc'>
+		<label>
+			<input id='numBottlesCons'>
+		</label>
+	</section>
+
+	<section id='waterCalc'>
+		<form>
+			<label>Enter your weight:
+				<input type='password'>
+			</label>
+		</form>
+		<p>Water Bottle Preference</p>
+		<select>
+			<option>12oz</option>
+			<option>16oz</option>
+			<option>32oz</option>
+		</select>
+		<button>Enter</button>
+		<p id='results'>How much water a day should you drink? </p>
+	</section>
+</body>
+</html>

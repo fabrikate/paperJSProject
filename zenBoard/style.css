@@ -1,0 +1,63 @@
+#background {
+	z-index: -50;
+	position: fixed;
+	top: -30%;
+  left: -30%;
+  width: 200%;
+  height: 200%;
+}
+
+#background img {
+	position: absolute;
+  opacity: 0.2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  min-width: 50%;
+  min-height: 50%;
+}
+
+canvas {
+	z-index: 50;
+	background-color: #DEC9AF;
+	border: solid 2px #5D5646;
+}
+
+canvas {
+	cursor: url(paint_brush.png), pointer;
+}
+
+#canvasStn {
+	width: 60%;
+	margin-right: auto;
+	margin-left: auto;
+
+}
+
+button {
+	background-color: #8995AB;
+	color: #DEC9AF;
+	font-size: 16px;
+}
+
+#buttons {
+	text-align: center;
+	width: 97%;
+	margin-top: 0px;
+}
+
+p {
+	font-family: Kalam, sans-serif;
+	font-size: 18px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+h2 {
+	font-family: Yesteryear, cursive;
+	font-size: 62px;
+	margin-top: 0px;
+	margin-bottom: 2px;
+}

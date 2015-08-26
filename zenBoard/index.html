@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Zen Board</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link href='http://fonts.googleapis.com/css?family=Kalam|Yesteryear' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src='../paperjs-v0.9.24/dist/paper-full.js'></script>
+	<script type="text/paperscript" canvas='myCanvas'>
+	var path;
+	var idleTime = 0;
+	$('.second').hide();
+
+
+	function onMouseDown(event) {
+		path = new Path();
+		path.fillColor = {
+			hue: Math.random() * 360,
+			saturation: 1,
+			brightness: 1,
+			opacity: 0.5
+		};
+
+		path.add(event.point);
+		idleTime = 0;
+	}
+
+	function onMouseDrag(event) {
+		var paintPoints = event.delta / 2;
+		paintPoints.angle += 90;
+
+		var top = event.middlePoint + paintPoints;
+		var bottom = event.middlePoint - paintPoints;
+
+		path.add(top);
+		path.insert(0, bottom);
+		idleTime = 0;
+	}
+
+	function onMouseUp(event) {
+		path.add(event.point);
+		path.closed = true;
+		path.smooth();
+		path.simplify();
+		project.activeLayer.lastChild.opacity = 0.5;
+		idleTime = 0;
+	}
+
+	// setInterval(idleTimer, 1000);
+
+	$('#clearBtn').on('click', function() {
+		project.clear();
+	})
+
+	function idleTimer() {
+		idleTime = idleTime + 1;
+		if(idleTime > 15) {
+			$('#myCanvas').fadeOut(2000, function() {
+				project.clear();
+				$('#myCanvas').fadeIn('slow');
+				return idleTime = 0;
+			});
+		}
+	}
+
+	</script>
+</head>
+<body>
+	<img id='background' src='capeCod.jpg' alt='A view of cape cod beach' />
+	<!-- <p id='zenB'>Zen Board</p> -->
+	<section id='buttons'>
+		<h2>Zen Board</h2>
+		<p>Paint will fade in so create on a whim without concern of the outcome</p>
+		<button id='clearBtn'>Reset Board</button>
+	</section>
+	<section id="canvasStn">
+		<canvas id='myCanvas' height='600' width='850'></canvas>
+		<canvas id='myCanvas' class='second' height='600' width='850'></canvas>
+	</section>
+</body>
+</html>
