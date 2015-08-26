@@ -3,6 +3,7 @@
 <head>
 	<title>Drip Drip</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src='../paperjs-v0.9.24/dist/paper-full.js'></script>
 	<script type="text/javascript" src='script.js'></script>
@@ -35,7 +36,7 @@
 		  var firstDrop = raindrops.place();
 		  firstDrop.position = Point.random() * view.size;
 
-		  firstDrop.rotate(Math.random() * 30);
+		  firstDrop.rotate(Math.random() * 45);
 		  firstDrop.scale(0.25 + Math.random() * 0.45);
 		}
 
@@ -44,7 +45,7 @@
 		  for( var i = 0; i < numOfDrops; i++) {
 		    var drop = project.activeLayer.children[i];
 		    drop.position.y += drop.bounds.height / 35;
-		    if(drop.bounds.bottom > view.size.height) {
+		    if(drop.bounds.bottom > (view.size.height + 100)) {
 		        drop.position.y = -drop.bounds.height;
 		    }
 		  }
@@ -81,16 +82,13 @@
 		<h1>Water water everywhere, but how much do I drink?</h1>
 	</section>
 
-	<section id='beforeCalc'>
-		<label>
-			<input id='numBottlesCons'>
-		</label>
-	</section>
-
 	<section id='waterCalc'>
+		<label>How many 12oz water bottles should you drink per day?
+			<input id='numBottlesGuess'>
+		</label>
 		<form>
 			<label>Enter your weight:
-				<input type='password'>
+				<input id='weight' type='password'>
 			</label>
 		</form>
 		<p>Water Bottle Preference</p>

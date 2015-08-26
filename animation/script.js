@@ -1,40 +1,31 @@
 $(document).ready(function() {
+	var userGuess, results;
+
 	// get input and calculte ounces of h2o to drink
-	var ouncesOfWater, results;
-
 	function convertInput2Ounces() {
-		var weight = parseInt($('input').val());
+		var weight = parseInt($('#weight').val());
+		console.log(weight);
 		if(isNaN(weight)) {
-			console.log('Please enter a valid weight.')
+			$('#results').text('Please Enter a valid weight');
 		} else {
-			console.log(ouncesOfWater = weight / 2);
-		}
-	}
-
-
-	// get preference of water bottle preference
-	function convertOuncestoNumBottles() {
-		console.log(ouncesOfWater);
-		var bottleOzPref = parseInt($('select').val());
-		if(isNaN(ouncesOfWater)) {
-			console.log('Enter a Valid Weight.');
-		} else {
-			results = Math.floor(ouncesOfWater / bottleOzPref);
-			console.log(results);
+			//get how many 12oz water bottles they should drink
+			userGuess = $('#numBottlesGuess').val()
+			var ouncesOfwater = weight / 2;
+			var bottlePref = parseInt($('select').val());
+			results = Math.round(ouncesOfwater / bottlePref);
+			$('#results').text('You should drink ' + results +
+				' bottles of water a day. You guessed you should drink ' + userGuess + ' 12oz water bottles.');
 		}
 	}
 
 	$('#waterCalc').on('click', 'button', function(e) {
 		e.preventDefault();
 		convertInput2Ounces();
-		convertOuncestoNumBottles();
-		$('#results').text('You should drink ' + results + ' bottles of water a day.')
+		$('#numBottlesGuess').val(' ');
+		$('#weight').val('');
 	});
 
-
-
 	// give result and play with animate 'girl' to be all blue
-
 
 })
 
